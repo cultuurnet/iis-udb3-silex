@@ -38,7 +38,7 @@ class EventController
                     $eventXml,
                     Response::HTTP_OK,
                     [
-                        'Content-Type' => 'application/xml'
+                        'Content-Type' => 'application/xml',
                     ]
                 );
             } else {
