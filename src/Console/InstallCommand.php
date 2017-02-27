@@ -2,6 +2,7 @@
 
 namespace CultuurNet\UDB3\IIS\Silex\Console;
 
+use CultuurNet\UDB3\IIS\Silex\DatabaseSchemaInstaller;
 use Knp\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
