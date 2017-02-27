@@ -4,6 +4,10 @@ use CultuurNet\UDB3\IIS\Silex\DatabaseSchemaInstaller;
 use CultuurNet\UDB3\IISStore\Stores\Doctrine\SchemaLogConfigurator;
 use CultuurNet\UDB3\IISStore\Stores\Doctrine\SchemaRelationConfigurator;
 use CultuurNet\UDB3\IISStore\Stores\Doctrine\SchemaXmlConfigurator;
+use CultuurNet\UDB3\IISStore\Stores\Doctrine\StoreLoggingDBALRepository;
+use CultuurNet\UDB3\IISStore\Stores\Doctrine\StoreRelationDBALRepository;
+use CultuurNet\UDB3\IISStore\Stores\Doctrine\StoreXmlDBALRepository;
+use CultuurNet\UDB3\IISStore\Stores\StoreRepository;
 use DerAlex\Silex\YamlConfigServiceProvider;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Migrations\Configuration\YamlConfiguration;
@@ -60,6 +64,43 @@ $app['database.installer'] = $app->share(
         );
 
         return $installer;
+    }
+);
+
+$app['iis.dbal_store.xml'] = $app->share(
+    function (Application $app) {
+        return new StoreXmlDBALRepository(
+            $app['dbal_connection'],
+            new StringLiteral('xml')
+        );
+    }
+);
+
+$app['iis.dbal_store.log'] = $app->share(
+    function (Application $app) {
+        return new StoreLoggingDBALRepository(
+            $app['dbal_connection'],
+            new StringLiteral('log')
+        );
+    }
+);
+
+$app['iis.dbal_store.relation'] = $app->share(
+    function (Application $app) {
+        return new StoreRelationDBALRepository(
+            $app['dbal_connection'],
+            new StringLiteral('relation')
+        );
+    }
+);
+
+$app['iis.dbal_store'] = $app->share(
+    function (Application $app) {
+        return new StoreRepository(
+            $app['iis.dbal_store.log'],
+            $app['iis.dbal_store.relation'],
+            $app['iis.dbal_store.xml']
+        );
     }
 );
 

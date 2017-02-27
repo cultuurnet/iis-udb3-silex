@@ -16,7 +16,7 @@ class EventControllerProvider implements ControllerProviderInterface
     {
         $app['iis.event_controller'] = $app->share(
             function (Application $app) {
-                return new EventController();
+                return new EventController($app['iis.dbal_store']);
             }
         );
 
