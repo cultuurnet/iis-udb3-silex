@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use CultuurNet\UDB3\IIS\Silex\Console\InstallCommand;
 use Knp\Provider\ConsoleServiceProvider;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -19,5 +20,7 @@ $app->register(
 
 /** @var \Knp\Console\Application $consoleApp */
 $consoleApp = $app['console'];
+
+$consoleApp->add(new InstallCommand());
 
 $consoleApp->run();
