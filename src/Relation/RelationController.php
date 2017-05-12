@@ -30,7 +30,6 @@ class RelationController
     public function get($externalId)
     {
         try {
-
             $eventCdbid = $this->repository->getEventCdbid(new StringLiteral($externalId));
 
             if ($eventCdbid) {
